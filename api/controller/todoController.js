@@ -62,7 +62,8 @@ exports.pagi_item = async (req, res) => {
         const _page = parseInt(page)
         const skip = (_page - 1) * _limit
         const data = await Task.find({}).limit(_limit).skip(skip)
-        const totalItems = await Task.estimatedDocumentCount()
+        const totalItems = await Task.estimatedDocumentCount() // a có thể làm thủ công bằng thằng ở dưới cho dễ nhớ nha
+        // const totalItems = await Task.find({}).length           
         const totalPage = Math.ceil(totalItems / _limit)
         res.json({
             message: 'thành công',
@@ -82,9 +83,8 @@ exports.pagi_search_item = async (req, res) => {
         const _page = parseInt(page)
         const skip = (_page - 1) * _limit
         const data = await Task.find({ name: { $regex: name, $options: 'i' } }).limit(_limit).skip(skip)
-        const totalItems = await Task.countDocuments({
-            name: { $regex: name, $options: 'i' }
-        })
+        const totalItems = await Task.countDocuments({ name: { $regex: name, $options: 'i' } })                  // a có thể làm thủ công bằng thằng ở dưới cho  dễ nhớ nhaa
+        // const totalItems = await Task.find({ name: { $regex: name, $options: 'i' } }).length
         const totalPage = Math.ceil(totalItems / _limit)
         res.json({
             message: 'thành công',
